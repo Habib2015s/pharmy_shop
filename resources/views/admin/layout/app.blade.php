@@ -214,9 +214,10 @@
 
     <nav class="mt-2">
         <div class="nav-label">دستیار</div>
-        <a href="{{ route('admin.openclaw') }}"
-           class="nav-link {{ request()->routeIs('admin.openclaw') ? 'active' : '' }}">
-            <i class="fas fa-chart-pie"></i> دستیار سریع
+        <a href="{{ route('admin.openclaw.index') }}"
+           class="nav-link {{ request()->routeIs('admin.openclaw.*') ? 'active' : '' }}">
+            <i class="fas fa-robot"></i>
+            دستیار OpenClaw
         </a>
         <div class="nav-label">داشبورد</div>
         <a href="{{ route('admin.dashboard') }}"
