@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'فارمی شاپ')</title>
-
+    <link rel="stylesheet" href="{{ asset('css/shop.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
     <link href="https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css" rel="stylesheet">
@@ -41,14 +41,134 @@
         a { text-decoration: none; color: inherit; }
 
         /* ═══════════════ NAVBAR ═══════════════ */
+        /* ═══════════════ NAVBAR (تطبیق‌پذیر و مدرن) ═══════════════ */
         .navbar {
             position: fixed;
             top: 0; left: 0; right: 0;
             height: var(--nav-h);
             z-index: 1000;
-            transition: background .35s ease, box-shadow .35s ease, backdrop-filter .35s ease;
-            background: transparent;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
+
+        /* ─── حالت اولیه (بالای صفحه): روشن و خوانا ─── */
+        .navbar.at-top {
+            background: rgba(255, 255, 255, 0.88);
+            border-bottom: 1px solid rgba(11, 133, 96, 0.1);
+        }
+
+        .navbar.at-top .navbar-brand,
+        .navbar.at-top .nav-link,
+        .navbar.at-top .cart-btn,
+        .navbar.at-top .user-btn,
+        .navbar.at-top .navbar-toggler {
+            color: var(--ink) !important;
+        }
+
+        .navbar.at-top .navbar-brand .brand-icon {
+            background: rgba(11, 133, 96, 0.1);
+            color: var(--g1);
+        }
+        .navbar.at-top .navbar-brand:hover .brand-icon {
+            background: rgba(11, 133, 96, 0.2);
+        }
+
+        .navbar.at-top .nav-link:hover {
+            color: var(--g1) !important;
+            background: rgba(11, 133, 96, 0.08);
+        }
+        .navbar.at-top .nav-link::after { background: var(--g1); }
+
+        .navbar.at-top .cart-btn,
+        .navbar.at-top .user-btn {
+            background: rgba(11, 133, 96, 0.08);
+            border-color: rgba(11, 133, 96, 0.2);
+        }
+        .navbar.at-top .cart-btn:hover,
+        .navbar.at-top .user-btn:hover {
+            background: rgba(11, 133, 96, 0.15);
+            border-color: rgba(11, 133, 96, 0.4);
+        }
+
+        /* فرم جستجو در حالت روشن */
+        .navbar.at-top .nav-search {
+            background: rgba(11, 133, 96, 0.06);
+            border-color: rgba(11, 133, 96, 0.15);
+        }
+        .navbar.at-top .nav-search input { color: var(--ink); }
+        .navbar.at-top .nav-search input::placeholder { color: var(--muted); }
+        .navbar.at-top .nav-search button { color: var(--g1); }
+
+        /* ─── حالت اسکرول شده: سبز برند با متن سفید ─── */
+        .navbar.scrolled {
+            background: rgba(11, 133, 96, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(11, 133, 96, 0.2);
+        }
+
+        .navbar.scrolled .navbar-brand,
+        .navbar.scrolled .nav-link,
+        .navbar.scrolled .cart-btn,
+        .navbar.scrolled .user-btn,
+        .navbar.scrolled .navbar-toggler {
+            color: #fff !important;
+        }
+
+        .navbar.scrolled .navbar-brand .brand-icon {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+        .navbar.scrolled .navbar-brand:hover .brand-icon {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .navbar.scrolled .nav-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .navbar.scrolled .nav-link::after { background: #fff; }
+
+        .navbar.scrolled .cart-btn,
+        .navbar.scrolled .user-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .navbar.scrolled .cart-btn:hover,
+        .navbar.scrolled .user-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* فرم جستجو در حالت تیره */
+        .navbar.scrolled .nav-search {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+        .navbar.scrolled .nav-search input { color: #fff; }
+        .navbar.scrolled .nav-search input::placeholder { color: rgba(255, 255, 255, 0.7); }
+        .navbar.scrolled .nav-search button { color: #fff; }
+
+        /* اصلاح منوی بازشو (Dropdown) برای خوانایی بهتر */
+        .custom-dropdown {
+            background: #fff !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08) !important;
+            padding: 8px 0;
+            min-width: 200px;
+        }
+        .custom-dropdown .dropdown-item {
+            color: var(--ink) !important;
+            font-size: 0.85rem;
+            padding: 0.6rem 1.2rem;
+            transition: all 0.2s;
+        }
+        .custom-dropdown .dropdown-item:hover {
+            background: var(--g-pale) !important;
+            color: var(--g1) !important;
+            padding-right: 1.5rem; /* افکت حرکت نرم */
+        }
+
 
         /* شفاف در بالا، solid بعد از scroll */
         .navbar.scrolled {
@@ -137,7 +257,6 @@
 
         /* دکمه ورود */
         .login-btn {
-            background: #fff;
             color: var(--g1) !important;
             border-radius: 10px;
             padding: .4rem 1rem !important;
@@ -379,9 +498,8 @@
             فارمی‌شاپ
         </a>
 
-        <button class="navbar-toggler border-0" data-bs-toggle="collapse" data-bs-target="#navMenu"
-                style="color:#fff">
-            <i class="fas fa-bars"></i>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <i class="fas fa-bars fa-lg"></i>
         </button>
 
         <div class="collapse navbar-collapse" id="navMenu">
@@ -399,15 +517,13 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                         <i class="fas fa-tags me-1"></i> دسته‌بندی
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark border-0 shadow"
-                        style="background:#0b8560;border-radius:12px;min-width:180px">
+                    <ul class="dropdown-menu custom-dropdown dropdown-menu-start">
                         @foreach(\App\Models\Category::where('is_active',true)->take(8)->get() as $c)
                             <li>
-                                <a class="dropdown-item" href="{{ route('shop.products', ['category'=>$c->slug]) }}"
-                                   style="font-size:.85rem;padding:.5rem 1rem">
+                                <a class="dropdown-item" href="{{ route('shop.products', ['category'=>$c->slug]) }}">
                                     {{ $c->name }}
                                 </a>
                             </li>
@@ -417,19 +533,17 @@
             </ul>
 
             {{-- actions --}}
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
 
                 {{-- جستجو کوچک --}}
                 <form action="{{ route('shop.search') }}" method="GET"
-                      class="d-none d-lg-flex align-items-center"
-                      style="background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);
-                             border-radius:10px;overflow:hidden">
+                      class="d-none d-lg-flex align-items-center nav-search"
+                      style="border-radius:10px; overflow:hidden; border:1.5px solid; transition: all 0.3s ease;">
                     <input type="text" name="q" placeholder="جستجو..."
                            value="{{ request('q') }}"
-                           style="background:transparent;border:none;color:#fff;padding:.38rem .8rem;
-                                  font-size:.82rem;width:160px;outline:none"
-                           class="text-white">
-                    <button style="background:transparent;border:none;color:#fff;padding:.38rem .7rem"
+                           style="background:transparent; border:none; padding:.38rem .8rem;
+                                  font-size:.82rem; width:160px; outline:none; transition: color 0.3s ease;">
+                    <button style="background:transparent; border:none; padding:.38rem .7rem; transition: color 0.3s ease;"
                             type="submit">
                         <i class="fas fa-search" style="font-size:.8rem"></i>
                     </button>
@@ -453,28 +567,26 @@
                     </a>
                 @else
                     <div class="dropdown">
-                        <div class="user-btn" data-bs-toggle="dropdown">
+                        <div class="user-btn" data-bs-toggle="dropdown" style="cursor: pointer;">
                             <div class="user-avatar">
                                 {{ mb_substr(auth()->user()->name, 0, 1) }}
                             </div>
                             <span class="d-none d-lg-inline">{{ Str::limit(auth()->user()->name, 10) }}</span>
                             <i class="fas fa-chevron-down" style="font-size:.65rem;opacity:.7"></i>
                         </div>
-                        <ul class="dropdown-menu dropdown-menu-start shadow border-0"
-                            style="border-radius:12px;min-width:200px;margin-top:.5rem">
+                        <ul class="dropdown-menu custom-dropdown dropdown-menu-start" style="margin-top: 0.75rem;">
                             <li class="px-3 py-2 border-bottom">
-                                <div class="fw-700" style="font-size:.85rem">{{ auth()->user()->name }}</div>
+                                <div class="fw-bold" style="font-size:.85rem; color: var(--ink);">{{ auth()->user()->name }}</div>
                                 <div class="text-muted" style="font-size:.75rem">{{ auth()->user()->email }}</div>
                             </li>
                             <li>
-                                <a class="dropdown-item py-2" href="{{ route('shop.orders') }}">
+                                <a class="dropdown-item" href="{{ route('shop.orders') }}">
                                     <i class="fas fa-box me-2 text-muted"></i>سفارش‌های من
                                 </a>
                             </li>
                             @can('manage medicines')
                                 <li>
-                                    <a class="dropdown-item py-2 text-success fw-700"
-                                       href="{{ route('admin.dashboard') }}">
+                                    <a class="dropdown-item text-success fw-bold" href="{{ route('admin.dashboard') }}">
                                         <i class="fas fa-tachometer-alt me-2"></i>پنل مدیریت
                                     </a>
                                 </li>
@@ -483,7 +595,7 @@
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
-                                    <button class="dropdown-item text-danger py-2">
+                                    <button type="submit" class="dropdown-item text-danger">
                                         <i class="fas fa-sign-out-alt me-2"></i>خروج
                                     </button>
                                 </form>
@@ -495,7 +607,6 @@
         </div>
     </div>
 </nav>
-
 {{-- ─── Flash messages ─── --}}
 @if(session('success') || session('cart_success'))
     <div class="position-fixed top-0 end-0 p-3" style="z-index:9999;margin-top:80px">
@@ -589,7 +700,50 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    /* ── navbar scroll & progress bar ── */
+    const nav   = document.getElementById('mainNav');
+    const pbar  = document.getElementById('progress-bar');
 
+    function updateNavbar() {
+        const sy   = window.scrollY;
+        const dh   = document.documentElement.scrollHeight - window.innerHeight;
+        const pct  = dh > 0 ? (sy / dh) * 100 : 0;
+
+        if (pbar) pbar.style.width = pct + '%';
+
+        if (sy > 50) {
+            nav.classList.remove('at-top');
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+            nav.classList.add('at-top');
+        }
+    }
+
+    // اجرا در اسکرول و همچنین در لحظه لود صفحه برای اطمینان از حالت اولیه
+    window.addEventListener('scroll', updateNavbar, { passive: true });
+    window.addEventListener('DOMContentLoaded', updateNavbar);
+
+    /* ── intersection observer برای fade-up ── */
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                obs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.anim-fade-up').forEach(el => obs.observe(el));
+
+    /* ── auto-hide toast ── */
+    setTimeout(() => {
+        document.querySelectorAll('.toast.show').forEach(t => {
+            bootstrap.Toast.getOrCreateInstance(t).hide();
+        });
+    }, 4000);
+</script>
 <script>
     /* ── navbar scroll ── */
     const nav   = document.getElementById('mainNav');

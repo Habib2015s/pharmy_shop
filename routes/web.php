@@ -31,13 +31,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [DashboardController::class,'index'])->name('dashboard');
             Route::prefix('openclaw')
                 ->name('openclaw.')
-                ->middleware('role:admin')
+                ->middleware(['auth', 'role:admin'])
                 ->group(function () {
-
-                    Route::get('/', [OpenClawController::class, 'index'])->name('index');
-                    Route::get('/status', [OpenClawController::class, 'status'])->name('status');
-                    Route::post('/run', [OpenClawController::class, 'run'])->name('run');
-
+                    Route::get('/',        [OpenClawController::class, 'index'])->name('index');
+                    Route::get('/status',  [OpenClawController::class, 'status'])->name('status');
+                    Route::post('/run',    [OpenClawController::class, 'run'])->name('run');
                 });
             Route::resource('categories', CategoryController::class)->except('show');
 

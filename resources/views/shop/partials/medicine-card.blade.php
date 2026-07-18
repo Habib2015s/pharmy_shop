@@ -1,70 +1,83 @@
-{{-- ============================================================
-     فایل: resources/views/shop/partials/medicine-card.blade.php
-     توضیح: کارت محصول — قابل استفاده مجدد در همه صفحات
-     ============================================================ --}}
 <div class="medicine-card">
-    {{-- تصویر --}}
-    @if($med->image)
-        <img src="{{ asset('storage/'.$med->image) }}"
-             class="card-img-top" alt="{{ $med->name }}">
-    @else
-        <div class="card-img-placeholder">
-            <i class="fas fa-pills"></i>
-        </div>
-    @endif
 
-    <div class="card-body">
-        {{-- badge (اختیاری) --}}
+    <div class="card-image">
+
         @if(isset($badge))
-            <span class="badge bg-success mb-1">{{ $badge }}</span>
+            <span class="badge badge-sale">{{ $badge }}</span>
         @endif
+
         @if($med->isLowStock())
-            <span class="badge bg-warning text-dark mb-1">موجودی محدود</span>
+            <span class="badge badge-stock">
+                موجودی محدود
+            </span>
         @endif
 
-        {{-- دسته‌بندی --}}
-        <div class="category-badge">{{ $med->category->name }}</div>
+        @if($med->image)
+            <img src="{{ asset('storage/'.$med->image) }}"
+                 alt="{{ $med->name }}">
+        @else
+            <div class="card-img-placeholder">
+                <i class="fas fa-pills"></i>
+            </div>
+        @endif
 
-        {{-- نام --}}
-        <h6 class="med-name">{{ $med->name }}</h6>
-        <div class="generic-name">{{ $med->generic_name }}</div>
+    </div>
 
-        {{-- وضعیت موجودی --}}
-        <div class="mt-1">
-            @if($med->stock > 0)
-                <span class="stock-ok">
-                    <i class="fas fa-check-circle me-1"></i>موجود ({{ $med->stock }} {{ $med->unit }})
-                </span>
-            @else
-                <span class="stock-low">
-                    <i class="fas fa-times-circle me-1"></i>ناموجود
-                </span>
-            @endif
+    <div class="card-content">
+
+        <span class="category-badge">
+            {{ $med->category->name }}
+        </span>
+
+        <h5 class="med-name">
+            {{ $med->name }}
+        </h5>
+
+        <div class="generic-name">
+            {{ $med->generic_name }}
         </div>
 
-        {{-- قیمت و دکمه --}}
-        <div class="price-section">
-            <div>
-                <div class="price">
-                    {{ number_format($med->sale_price) }}
-                    <small>تومان</small>
-                </div>
+        @if($med->stock>0)
+            <div class="stock stock-success">
+                <i class="fas fa-check-circle"></i>
+                {{ $med->stock }} {{ $med->unit }} موجود
+            </div>
+        @else
+            <div class="stock stock-danger">
+                <i class="fas fa-times-circle"></i>
+                ناموجود
+            </div>
+        @endif
+
+        <div class="bottom-section">
+
+            <div class="price">
+                {{ number_format($med->sale_price) }}
+                <small>تومان</small>
             </div>
 
             @if($med->stock > 0)
+
                 <form action="{{ route('shop.cart.add') }}" method="POST">
                     @csrf
                     <input type="hidden" name="medicine_id" value="{{ $med->id }}">
-                    <input type="hidden" name="quantity"    value="1">
-                    <button type="submit" class="btn-add" title="افزودن به سبد">
-                        <i class="fas fa-plus"></i>
+                    <input type="hidden" name="quantity" value="1">
+
+                    <button type="submit" class="btn-add" title="افزودن به سبد خرید">
+                        <i class="fas fa-cart-plus"></i>
                     </button>
                 </form>
+
             @else
-                <button class="btn-add" disabled style="opacity:.4;cursor:not-allowed">
+
+                <button type="button" class="btn-add disabled" disabled>
                     <i class="fas fa-ban"></i>
                 </button>
+
             @endif
+
         </div>
+
     </div>
+
 </div>
